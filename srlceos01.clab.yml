@@ -1,0 +1,18 @@
+# topology documentation: http://containerlab.dev/lab-examples/srl-ceos/
+name: srlceos
+
+mgmt:
+  network: custom_mgmt                # management network name
+  ipv4-subnet: 172.100.100.0/24       # ipv4 range
+
+topology:
+  nodes:
+    ceos1:
+      kind: arista_ceos
+      image: ceos:4.36.0F
+    ceos2:
+      kind: arista_ceos
+      image: ceos:4.36.0F
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]
