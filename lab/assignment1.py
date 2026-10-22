@@ -188,3 +188,34 @@ with connect_netconf() as conn:
     print(xml_parsing(resp.data_xml).toprettyxml())
     print("hello")
 
+#-------------END OF TASK 3----------
+
+
+#------------TASK 4----------------
+
+def set_interface_description(
+        conn,
+        interface_name: str,
+        description: str
+) -> bool:
+    EDIT_FILTER = f"""
+    <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+        <interfaces xmlns="http://openconfig.net/yang/interfaces">
+            <interface>
+                <name>{interface_name}</name>
+                <config>
+                    <name>{interface_name}</name>
+                    <description>{description}</description>
+                </config>
+            </interface>
+        </interfaces>
+    </config>
+    """
+
+    return conn.edit_config(target="running", config=EDIT_FILTER, default_operation="merge")
+
+with connect_netconf() as conn:
+    resp = set_interface_description(conn, "Ethernet1", "Goodbye world!")
+    dom = (xml_parsing(resp.xml))
+
+    print(dom.toprettyxml())
