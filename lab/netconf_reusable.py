@@ -1,16 +1,18 @@
 from ncclient import manager
-HOST = "172.100.100.4"
 
-def connect_netconf():
-
-    return manager.connect(
-    host=HOST,
-    port=830,
-    username="admin",
-    password="admin",
-    hostkey_verify=False,
-    timeout=15,
-)
+def connect_netconf(hosts):
+   username = "admin"
+   password = "admin"
+   if hosts == "172.100.100.4":
+      password="NokiaSrl1!"
+   return manager.connect(
+   host=hosts,
+   port=830,
+   username="admin",
+   password=password,
+   hostkey_verify=False,
+   timeout=15,
+   )
 
 import xml.dom.minidom
 
